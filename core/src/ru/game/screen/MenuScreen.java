@@ -40,15 +40,15 @@ public class MenuScreen extends BaseScreen {
             stars[i] = new Star(atlas);
         }
         exitButton = new ExitButton(atlas);
-        playButton = new PlayButton(atlas,game);
+        playButton = new PlayButton(atlas, game);
 
     }
 
     @Override
     public void resize(Rect worldBounds) {
         background.resize(worldBounds);
-        for (Star star: stars) {
-          star.resize(worldBounds);
+        for (Star star : stars) {
+            star.resize(worldBounds);
         }
         exitButton.resize(worldBounds);
         playButton.resize(worldBounds);
@@ -71,19 +71,19 @@ public class MenuScreen extends BaseScreen {
     @Override
     public boolean touchDown(Vector2 touch, int pointer, int button) {
         exitButton.touchDown(touch, pointer, button);
-        playButton.touchDown(touch,pointer,button);
+        playButton.touchDown(touch, pointer, button);
         return false;
     }
 
     @Override
     public boolean touchUp(Vector2 touch, int pointer, int button) {
-        exitButton.touchUp(touch,pointer,button);
-        playButton.touchUp(touch,pointer,button);
+        exitButton.touchUp(touch, pointer, button);
+        playButton.touchUp(touch, pointer, button);
         return false;
     }
 
     private void update(float delta) {
-        for (Star star: stars) {
+        for (Star star : stars) {
             star.update(delta);
         }
         exitButton.update(delta);
@@ -93,7 +93,7 @@ public class MenuScreen extends BaseScreen {
     private void draw() {
         batch.begin();
         background.draw(batch);
-        for (Star star: stars) {
+        for (Star star : stars) {
             star.draw(batch);
         }
         exitButton.draw(batch);
