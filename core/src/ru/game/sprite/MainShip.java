@@ -1,6 +1,7 @@
 package ru.game.sprite;
 
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -30,8 +31,11 @@ public class MainShip extends Sprite {
     private Vector2 bulletV;
     private float bulletHeight;
     private int bulletDamage;
+    private Sound sound;
+    final float TIMER = 0.3f;
+    float timeValue = 0;
 
-    public MainShip(TextureAtlas atlas, BulletPool bulletPool) {
+    public MainShip(TextureAtlas atlas, BulletPool bulletPool, Sound sound) {
         super(atlas.findRegion("main_ship"), 1, 2, 2);
         this.bulletPool = bulletPool;
         bulletRegion = atlas.findRegion("bulletMainShip");
@@ -39,6 +43,7 @@ public class MainShip extends Sprite {
         bulletV = new Vector2(0,0.5f);
         bulletHeight = 0.01f;
         bulletDamage = 1;
+        this.sound = sound;
     }
 
     @Override
@@ -60,6 +65,13 @@ public class MainShip extends Sprite {
         if (getRight() < worldBounds.getLeft()) {
             setLeft(worldBounds.getRight());
         }
+
+        timeValue = timeValue + delta;
+        if (timeValue >= TIMER) {
+            timeValue= timeValue - TIMER;
+            shoot();
+        }
+
     }
 
     @Override
@@ -170,6 +182,7 @@ public class MainShip extends Sprite {
         Bullet bullet = bulletPool.obtain();
         bulletPos.set(pos.x, pos.y + getHalfHeight());
         bullet.set(this, bulletRegion,bulletPos,bulletV,bulletHeight,worldBounds,bulletDamage);
+        sound.play(0.02f);
     }
 }
 

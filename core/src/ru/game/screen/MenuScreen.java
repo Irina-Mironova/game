@@ -42,6 +42,7 @@ public class MenuScreen extends BaseScreen {
         exitButton = new ExitButton(atlas);
         playButton = new PlayButton(atlas, game);
 
+
     }
 
     @Override
