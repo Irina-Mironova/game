@@ -15,11 +15,11 @@ import ru.game.math.Rect;
 public class BaseScreen implements Screen, InputProcessor {
     protected SpriteBatch batch;
     private Rect screenBounds;
-    private Rect worldBounds;
+    protected Rect worldBounds;
     private Rect glBounds;
 
     private Matrix4 worldToGl;
-    private Matrix3  screenToWorld;
+    private Matrix3 screenToWorld;
 
     protected Vector2 touch;
 
@@ -48,9 +48,9 @@ public class BaseScreen implements Screen, InputProcessor {
         screenBounds.setBottom(0);
         float aspect = width / (float) height;
         worldBounds.setHeight(1f);
-        worldBounds.setWidth(1f*aspect);
-        MatrixUtils.calcTransitionMatrix(worldToGl, worldBounds,glBounds);
-        MatrixUtils.calcTransitionMatrix(screenToWorld,screenBounds,worldBounds);
+        worldBounds.setWidth(1f * aspect);
+        MatrixUtils.calcTransitionMatrix(worldToGl, worldBounds, glBounds);
+        MatrixUtils.calcTransitionMatrix(screenToWorld, screenBounds, worldBounds);
         batch.setProjectionMatrix(worldToGl);
         resize(worldBounds);
 
@@ -60,6 +60,7 @@ public class BaseScreen implements Screen, InputProcessor {
     public void resize(Rect worldBounds) {
 
     }
+
     @Override
     public void pause() {
 
@@ -83,7 +84,9 @@ public class BaseScreen implements Screen, InputProcessor {
     }
 
     @Override
-    public boolean keyDown(int keycode) { return false;}
+    public boolean keyDown(int keycode) {
+        return false;
+    }
 
     @Override
     public boolean keyUp(int keycode) {
