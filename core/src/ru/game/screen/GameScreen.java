@@ -12,12 +12,16 @@ import ru.game.math.Rect;
 import ru.game.poll.BulletPool;
 import ru.game.poll.EnemyPool;
 import ru.game.sprite.Background;
+import ru.game.sprite.Bullet;
+import ru.game.sprite.EnemyShip;
 import ru.game.sprite.MainShip;
 import ru.game.sprite.Star;
 import ru.game.utils.EnemyEmitter;
 
 public class GameScreen extends BaseScreen {
     private static final int STAR_COUNT = 64;
+    private static final float DST_COLLISION_SHIP = 0.03f;
+
     private Texture bg;
     private Background background;
     private TextureAtlas atlas;
@@ -63,7 +67,7 @@ public class GameScreen extends BaseScreen {
         super.render(delta);
         update(delta);
         checkCollisions();
-        freeAllDstroyed();
+        freeAllDestroyed();
         draw();
     }
 
@@ -112,10 +116,34 @@ public class GameScreen extends BaseScreen {
     }
 
     private void checkCollisions() {
+        for (Bullet bullet : bulletPool.getActiveSprites()) {
+            if (bullet.getOwner().getClass().getName().contains("MainShip")) {
+                for (EnemyShip enemyShip : enemyPool.getActiveSprites()) {
+                    if ((Math.abs(bullet.pos.x - enemyShip.pos.x)) < enemyShip.getHalfWidth() &&
+                         Math.abs(bullet.pos.y - enemyShip.pos.y) < enemyShip.getHalfHeight()) {
+                        bullet.destroy();
+                        enemyShip.setHp(enemyShip.getHp() - bullet.getDamage());
+                        if (enemyShip.getHp() <= 0) {
+                            enemyShip.destroy();
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+
+        for (EnemyShip enemyShip : enemyPool.getActiveSprites()) {
+            if ((Math.abs(mainShip.pos.x - enemyShip.pos.x)) < mainShip.getHalfWidth() + enemyShip.getHalfWidth() &&
+                 Math.abs(mainShip.pos.y - enemyShip.pos.y) < mainShip.getHalfHeight() + enemyShip.getHalfHeight() - DST_COLLISION_SHIP) {
+                enemyShip.destroy();
+                break;
+            }
+        }
+
 
     }
 
-    private void freeAllDstroyed() {
+    private void freeAllDestroyed() {
         bulletPool.freeAllDestoyedActiveSprites();
         enemyPool.freeAllDestoyedActiveSprites();
 
