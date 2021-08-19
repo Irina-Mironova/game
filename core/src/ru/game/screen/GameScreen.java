@@ -17,7 +17,9 @@ import ru.game.poll.ExplosionPool;
 import ru.game.sprite.Background;
 import ru.game.sprite.Bullet;
 import ru.game.sprite.EnemyShip;
+import ru.game.sprite.GameOverMessage;
 import ru.game.sprite.MainShip;
+import ru.game.sprite.NewGameButton;
 import ru.game.sprite.Star;
 import ru.game.utils.EnemyEmitter;
 
@@ -39,6 +41,9 @@ public class GameScreen extends BaseScreen {
     private Sound laserSound;
     private Sound explosionSound;
     private Music music;
+
+    private GameOverMessage gameOverMessage;
+    private NewGameButton newGameButton;
 
     private EnemyEmitter enemyEmitter;
 
@@ -67,6 +72,8 @@ public class GameScreen extends BaseScreen {
         music.setLooping(true);
         music.play();
 
+        gameOverMessage = new GameOverMessage(atlas);
+        newGameButton = new NewGameButton(atlas, mainShip,bulletPool, explosionPool,enemyPool, enemyEmitter);
     }
 
     @Override
@@ -86,6 +93,8 @@ public class GameScreen extends BaseScreen {
             star.resize(worldBounds);
         }
         mainShip.resize(worldBounds);
+        gameOverMessage.resize(worldBounds);
+        newGameButton.resize(worldBounds);
     }
 
     @Override
@@ -105,12 +114,14 @@ public class GameScreen extends BaseScreen {
     @Override
     public boolean touchDown(Vector2 touch, int pointer, int button) {
         mainShip.touchDown(touch, pointer, button);
+        newGameButton.touchDown(touch,pointer,button);
         return false;
     }
 
     @Override
     public boolean touchUp(Vector2 touch, int pointer, int button) {
         mainShip.touchUp(touch, pointer, button);
+        newGameButton.touchUp(touch, pointer, button);
         return false;
     }
 
@@ -182,6 +193,9 @@ public class GameScreen extends BaseScreen {
             mainShip.draw(batch);
             bulletPool.drawActiveSprites(batch);
             enemyPool.drawActiveSprites(batch);
+        } else{
+            gameOverMessage.draw(batch);
+            newGameButton.draw(batch);
         }
         explosionPool.drawActiveSprites(batch);
         batch.end();

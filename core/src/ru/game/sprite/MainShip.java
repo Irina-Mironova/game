@@ -163,6 +163,14 @@ public class MainShip extends Ship {
         v.setZero();
     }
 
+    @Override
+    public void reload(){
+      hp = 1;
+      flushDestroy();
+      pos.setZero();
+      setBottom(worldBounds.getBottom() + BOTTOM_MARGIN);
+      bulletPos.set(pos.x, pos.y + getHalfHeight());
 
+    }
 }
 

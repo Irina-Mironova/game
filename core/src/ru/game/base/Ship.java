@@ -85,6 +85,11 @@ public abstract class Ship extends Sprite {
         boom();
     }
 
+    public void reload(){
+        super.destroy();
+        reloadTIMER = 0f;
+    }
+
     private void shoot() {
         Bullet bullet = bulletPool.obtain();
 

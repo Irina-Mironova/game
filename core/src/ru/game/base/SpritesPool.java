@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import java.util.ArrayList;
 import java.util.List;
 
+import ru.game.sprite.Explosion;
+
 public abstract class SpritesPool<T extends Sprite> {
 
     protected final List<T> activeSprites = new ArrayList<>();
@@ -65,6 +67,13 @@ public abstract class SpritesPool<T extends Sprite> {
 
     public List<T> getActiveSprites() {
         return activeSprites;
+    }
+
+    public void reload(){
+        for (Sprite sprite: activeSprites) {
+            sprite.destroy();
+        }
+        freeAllDestoyedActiveSprites();
     }
 
 }

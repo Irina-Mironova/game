@@ -117,4 +117,8 @@ public class EnemyEmitter {
         }
 
     }
+
+    public void reload(){
+        generateTimer = 0;
+    }
 }
