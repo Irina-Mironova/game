@@ -5,8 +5,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import java.util.ArrayList;
 import java.util.List;
 
-import ru.game.sprite.Explosion;
-
 public abstract class SpritesPool<T extends Sprite> {
 
     protected final List<T> activeSprites = new ArrayList<>();
@@ -22,7 +20,7 @@ public abstract class SpritesPool<T extends Sprite> {
             sprite = freeSprites.remove(freeSprites.size() - 1);
         }
         activeSprites.add(sprite);
-        System.out.println(getClass().getName()  + "active/free:" + activeSprites.size() + "/" + freeSprites.size());
+        System.out.println(getClass().getName() + "active/free:" + activeSprites.size() + "/" + freeSprites.size());
         return sprite;
     }
 
@@ -45,7 +43,7 @@ public abstract class SpritesPool<T extends Sprite> {
     public void freeAllDestoyedActiveSprites() {
         for (int i = 0; i < activeSprites.size(); i++) {
             T sprite = activeSprites.get(i);
-            if (sprite.isDestroyed()){
+            if (sprite.isDestroyed()) {
                 free(sprite);
                 i--;
                 sprite.flushDestroy();
@@ -53,27 +51,27 @@ public abstract class SpritesPool<T extends Sprite> {
         }
     }
 
+    public void freeAllActiveSprites() {
+        freeSprites.addAll(activeSprites);
+        activeSprites.clear();
+    }
+
     private void free(T sprite) {
         if (activeSprites.remove(sprite)) {
             freeSprites.add(sprite);
-            System.out.println(getClass().getName()  + "active/free:" + activeSprites.size() + "/" + freeSprites.size());
+            System.out.println(getClass().getName() + "active/free:" + activeSprites.size() + "/" + freeSprites.size());
         }
     }
 
-  public void dispose(){
+
+    public void dispose() {
         activeSprites.clear();
         freeSprites.clear();
-  }
+    }
 
     public List<T> getActiveSprites() {
         return activeSprites;
     }
 
-    public void reload(){
-        for (Sprite sprite: activeSprites) {
-            sprite.destroy();
-        }
-        freeAllDestoyedActiveSprites();
-    }
 
 }

@@ -85,9 +85,8 @@ public abstract class Ship extends Sprite {
         boom();
     }
 
-    public void reload(){
-        super.destroy();
-        reloadTIMER = 0f;
+    public int getHp() {
+        return hp;
     }
 
     private void shoot() {

@@ -11,6 +11,8 @@ import ru.game.poll.BulletPool;
 import ru.game.poll.ExplosionPool;
 
 public class MainShip extends Ship {
+    private static final int HP = 100;
+
     private static final float HEIGHT = 0.15f;
     private static final float BOTTOM_MARGIN = 0.05f;
     private static final int INVALID_POINTER = -1;
@@ -35,7 +37,19 @@ public class MainShip extends Ship {
         bulletDamage = 1;
         reloadInterval = RELOAD_INTERVAL;
         v0.set(0.5f, 0);
-        hp = 1;
+        hp = HP;
+    }
+
+    public void startNewGame() {
+        hp = HP;
+        pressedLeft = false;
+        pressedRight = false;
+        leftPointer = INVALID_POINTER;
+        rightPointer = INVALID_POINTER;
+        stop();
+        this.pos.x = worldBounds.pos.x;
+        flushDestroy();
+
     }
 
     @Override
@@ -151,6 +165,7 @@ public class MainShip extends Ship {
         );
     }
 
+
     private void moveRight() {
         v.set(v0);
     }
@@ -163,14 +178,6 @@ public class MainShip extends Ship {
         v.setZero();
     }
 
-    @Override
-    public void reload(){
-      hp = 1;
-      flushDestroy();
-      pos.setZero();
-      setBottom(worldBounds.getBottom() + BOTTOM_MARGIN);
-      bulletPos.set(pos.x, pos.y + getHalfHeight());
 
-    }
 }
 

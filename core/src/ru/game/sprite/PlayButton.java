@@ -14,7 +14,6 @@ public class PlayButton extends BaseButton {
     private final Game game;
 
 
-
     public PlayButton(TextureAtlas atlas, Game game) {
         super(atlas.findRegion("btPlay"));
         this.game = game;
@@ -29,7 +28,7 @@ public class PlayButton extends BaseButton {
 
     @Override
     public void action() {
-      game.setScreen(new GameScreen());
+        game.setScreen(new GameScreen());
     }
 
     @Override

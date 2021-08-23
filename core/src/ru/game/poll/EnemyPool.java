@@ -22,11 +22,4 @@ public class EnemyPool extends SpritesPool<EnemyShip> {
         return new EnemyShip(worldBounds, bulletPool, explosionPool);
     }
 
-    @Override
-    public void reload() {
-        for (EnemyShip enemy: this.activeSprites) {
-            enemy.reload();
-        }
-        this.freeAllDestoyedActiveSprites();
-    }
 }

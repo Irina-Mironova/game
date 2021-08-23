@@ -73,9 +73,4 @@ public class EnemyShip extends Ship {
         );
     }
 
-    @Override
-    public void destroy() {
-        super.destroy();
-        reloadTIMER = 0f;
-    }
 }

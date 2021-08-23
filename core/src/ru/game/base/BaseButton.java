@@ -23,13 +23,13 @@ public abstract class BaseButton extends Sprite {
         }
         this.pointer = pointer;
         scale = PRESS_SCALE;
-        pressed =true;
+        pressed = true;
         return false;
     }
 
     @Override
     public boolean touchUp(Vector2 touch, int pointer, int button) {
-        if (this.pointer != pointer || !pressed){
+        if (this.pointer != pointer || !pressed) {
             return false;
         }
         if (isMe(touch)) {
