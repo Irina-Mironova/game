@@ -1,3 +1,3 @@
 # game
 
-Разработка игры на LibGDX
+Разработка игры Space shooter с помощью фреймворка LibGDX
